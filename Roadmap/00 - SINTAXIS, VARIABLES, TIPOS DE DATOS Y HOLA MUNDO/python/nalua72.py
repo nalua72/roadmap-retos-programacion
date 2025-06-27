@@ -6,7 +6,7 @@
 multiline comment """
 
 variable = 0 # This is a initialized variable to 0
-CONSTANT = 45 # Constant are supposed to be inmutable
+CONSTANT = 45 # Constants are supposed to be inmutable
 
 v_string = "this a string" # String variable
 v_int = 0 # Int variable
