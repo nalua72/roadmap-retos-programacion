@@ -116,24 +116,20 @@ def list_users(userlist: list[dict]):
     else:
         print("Agenda vacia")
 
-def insert_user(userlist: list[dict]) -> list[dict]:
+def insert_user(userlist: list[dict]):
     """
     Inserts a new user in the agenda if it doesn't exit
     
     Args:
     userlist (type: list[dict]): A list of dictioneries. Each dictionary contents the user details
-    
-    Returns:
-    (type: list[dict]): A list of dictioneries. Each dictionary contents the user details
     """
     user = get_user_info()
     if not any(user['name'] in dict.values() for dict in userlist):
         userlist.append(user)
     else:
         print(f"Usuario {user['name']} ya existe")
-    return userlist
 
-def update_user(userlist: list[dict]) -> list[dict]:
+def update_user(userlist: list[dict]) -> None:
     """
     Updates an existing user details
     
@@ -148,11 +144,11 @@ def update_user(userlist: list[dict]) -> list[dict]:
         if user['name'] == username:
             print(f"Actualizando el usuario: {username}")
             user.update(get_user_info())
-            return userlist
+            return None
     print(f"El usuario {username} no existe")
-    return userlist
+    return None
 
-def delete_user(userlist: list[dict]) -> list[dict]:
+def delete_user(userlist: list[dict]):
     """
     Deletes a user from the agenda if it exits
     
@@ -171,7 +167,6 @@ def delete_user(userlist: list[dict]) -> list[dict]:
                 break
     else:
         print(f"El usuario {username} no existe")
-    return userlist
 
 def search_user(userlist: list[dict]) -> None:
     """
@@ -181,7 +176,7 @@ def search_user(userlist: list[dict]) -> None:
     userlist (type: list[dict]): A list of dictioneries. Each dictionary contents the user details
     
     Returns:
-    (type: list[dict]): A list of dictioneries. Each dictionary contents the user details
+    (type: None):
     """
     username = input("Introduce el usuario a buscar: ")
     for user in userlist:
@@ -205,11 +200,11 @@ def main():
             case "2":
                 search_user(agenda)
             case "3":
-                agenda = insert_user(agenda)
+                insert_user(agenda)
             case "4":
                 agenda = update_user(agenda)
             case "5":
-                agenda = delete_user(agenda)
+                delete_user(agenda)
             case "6":
                 print("Saliendo")
                 break
