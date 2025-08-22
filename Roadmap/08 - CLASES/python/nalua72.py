@@ -17,22 +17,43 @@ print(usuario2)
 
 def main():
     class Stack:
+        """
+        Stack
+
+        A simple stack (LIFO) implementation using a Python list.
+
+        Classes:
+            Stack: Provides methods to push, pop, count, and represent stack elements.
+
+        Methods:
+            __init__(): Initializes an empty stack.
+            push(element): Adds an element to the top of the stack.
+            pop(): Removes the top element from the stack if not empty; prints a message if the stack is empty.
+            count(): Prints the number of elements in the stack.
+            __repr__(): Returns a string representation of the stack.
+        """
+        """A simple stack implementation."""
         def __init__(self):
+            """Initialize an empty stack."""
             self.stack = []
 
         def push(self, element):
+            """Add an element to the top of the stack."""
             self.stack.append(element)
 
         def pop(self):
+            """Remove the top element from the stack if not empty."""
             if len(self.stack) > 0:
                 self.stack.pop()
             else:
                 print("Pila vacia")
 
         def count(self):
+            """Print the number of elements in the stack."""
             print(f"El tamaño de la pila es: {len(self.stack)} elementos")
 
         def __repr__(self):
+            """Return a string representation of the stack."""
             return str(self.stack)
     
     class Queue:
