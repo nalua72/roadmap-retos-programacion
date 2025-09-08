@@ -169,7 +169,7 @@ def ventas_por_producto():
 
 def exit_program():
     """
-    Function to exit the program (placeholder)
+    Function to exit the program
     """
     file = pathlib.Path("nalua72.txt")
     if file.exists():
