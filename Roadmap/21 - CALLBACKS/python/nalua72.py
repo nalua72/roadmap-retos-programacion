@@ -27,21 +27,25 @@ def pedido_listo(dish):
 def pedido_entregado(dish):
     print(f"Pedido {dish} entregado")
 
-def pedido(plato, call_confirmado, call_listo, call_entregado):
-    def flujo_pedido():
-        call_confirmado(plato)
-        time.sleep(random.randint(1, 10))
-        call_listo(plato)
-        time.sleep(random.randint(1, 10))
-        call_entregado(plato)
 
-    threading.Thread(target=flujo_pedido).start()
+def procesar_pedido(plato, call_confirmado, call_listo, call_entregado):
+    call_confirmado(plato)
+    time.sleep(random.randint(1, 10))
+    call_listo(plato)
+    time.sleep(random.randint(1, 10))
+    call_entregado(plato)
 
 def main():
+    pedidos = ["numero1", "numero2", "numero3"]
+    tasks = []
 
-    pedido("numero1", pedido_confirmado, pedido_listo, pedido_entregado)
-    pedido("numero2", pedido_confirmado, pedido_listo, pedido_entregado)
-    pedido("numero3", pedido_confirmado, pedido_listo, pedido_entregado)
+    for pedido in pedidos:
+        task = threading.Thread(target=procesar_pedido, args=(pedido, pedido_confirmado, pedido_listo, pedido_entregado))
+        task.start()
+        tasks.append(task)
+
+    for task in tasks:
+        task.join()
 
 
 if __name__ == "__main__":
