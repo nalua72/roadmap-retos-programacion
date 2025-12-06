@@ -7,10 +7,37 @@ Ejercicio:
 
 # Forma incorrecta
 
+class Report:
+    def __init__(self, data):
+        self.data = data
+
+    def calculate_statistics(self):
+        # Lógica de negocio
+        return sum(self.data) / len(self.data)
+
+    def save_to_file(self, filename):
+        # Responsabilidad de persistencia
+        with open(filename, "w") as f:
+            f.write(str(self.data))
+
+    def print_report(self):
+        # Responsabilidad de presentación
+        print("Datos:", self.data)
 
 # Forma correcta
 
+class ReportCalculator:
+    def calculate_statistics(self, data):
+        return sum(data) / len(data)
 
+class ReportSaver:
+    def save(self, filename, data):
+        with open(filename, "w") as f:
+            f.write(str(data))
+
+class ReportPrinter:
+    def print(self, data):
+        print("Datos:", data)
 
 """  
 DIFICULTAD EXTRA (opcional):
