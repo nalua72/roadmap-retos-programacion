@@ -36,35 +36,19 @@ class Character:
         self.life = life
         self.harm_range = harm_range
         self.evasion = evasion
-        self.is_locked: bool = False
 
-    def attack(self, character: Character):
-        """Gestiona el ataque de un personaje a otro personaje"""
-        if not self.is_locked:
-            harm = self._calculate_harm_atack()
-            print(f"{self.name} ataca a {character.name} con una fuerza {harm}")
+    def attack(self) -> int:
+        """Devuelve el valor del ataque"""
+        return random.randint(self.harm_range[0], self.harm_range[1])
 
-            if harm == self.harm_range[1]:
-                character.is_locked = True
-
-            character.receive_attack(harm)
-        else:
-            print(f"{self.name} está bloqueado y pierde el turno")
-            self.is_locked = False
-
-    def receive_attack(self, harm: int) -> None:
+    def receive_attack(self, harm: int) -> bool:
         """Decide si un personaje recibe el ataque o lo evita"""
         evasion = self._calculate_evasion()
         if evasion:
             print(f"{self.name} evita el ataque")
-            return
-        print(f"{self.name} recibe un ataque")
-        self.life -= harm
-        return
-
-    def _calculate_harm_atack(self) -> int:
-        """Calculates the harm that the character can cause"""
-        return random.randint(self.harm_range[0], self.harm_range[1])
+            return False
+        self.life = max(0, self.life - harm)
+        return True
 
     def _calculate_evasion(self) -> bool:
         """Calculates if the character can evade the attack"""
@@ -78,6 +62,7 @@ class Battle:
         self.character1 = character1
         self.character2 = character2
         self.turn: int = 0
+        self.locked_character: Character | None = None
 
     def start(self) -> None:
         """Metodo para gestionar la batalla"""
@@ -88,17 +73,24 @@ class Battle:
             self.turn += 1
             print(f"Turno: {self.turn}")
 
-            # if self.turn % 2:
-            #     self.character1.attack(self.character2)
-            #     self._print_status()
-            # else:
-            #     self.character2.attack(self.character1)
-            #     self._print_status()
-            # attacker, defender = self._select_attacker()
-            current_attacker.attack(current_defender)
-            current_attacker, current_defender = current_defender, current_attacker
+            # ¿Está bloqueado?
+            if self.locked_character == current_attacker:
+                print(f"{current_attacker.name} está bloqueado y pierde el turno")
+                self.locked_character = None
+            else:
+                damage = current_attacker.attack()
+                print(f"{current_attacker.name} ataca con fuerza {damage}")
+
+                hit = current_defender.receive_attack(damage)
+
+                # Regla del combate (no del personaje)
+                if hit and damage == current_attacker.harm_range[1]:
+                    print(f"{current_defender.name} queda bloqueado")
+                    self.locked_character = current_defender
 
             self._print_status()
+
+            current_attacker, current_defender = current_defender, current_attacker
 
             sleep(1)
 
