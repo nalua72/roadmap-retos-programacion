@@ -113,7 +113,7 @@ class BatmanCave():
 
         if threat < self.SECURITY_THRESHOLD:
             print(
-                f"No se detectan amenazas serias.Hay una amenaza máxima de grado {threat} a la distancia {distance} en el área {area_coordinates}.")
+                f"No se detectan amenazas serias. Hay una amenaza máxima de grado {threat} a la distancia {distance} en el área {area_coordinates}.")
 
             print(f"")
             return
