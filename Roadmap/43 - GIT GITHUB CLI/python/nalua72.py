@@ -181,7 +181,7 @@ def show_menu():
 9. Añadir repositorio remoto
 10. Pull
 11. Push
-0. Salir
+12. Salir
 """)
 
 
@@ -219,7 +219,7 @@ def main():
                 cli.git_pull()
             case 11:
                 cli.git_push()
-            case 0:
+            case 12:
                 print("👋 Saliendo...")
                 break
             case _:
